@@ -35,5 +35,5 @@ jobs:
       if: success()
       with:
         name: 2) Integration Tests
-        path: target/failsafe-reports/TEST-*.xml
+        path: target/failsafe-reports/*.xml
         reporter: java-junit
