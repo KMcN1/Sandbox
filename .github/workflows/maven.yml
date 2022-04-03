@@ -7,33 +7,73 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-        
-    - name: Build with Maven
-      run: mvn -B verify --file pom.xml
-    
-    - name: Unit Test Report
-      uses: dorny/test-reporter@v1
-      if: success() || failure()
-      with:
-        name: 1) JUnit Tests
-        path: target/surefire-reports/TEST-*.xml
-        reporter: java-junit
+      - uses: actions/checkout@v3
 
-    - name: Integration Test Report
-      uses: dorny/test-reporter@v1
-      if: success() || failure()
-      with:
-        name: 2) Integration Tests
-        path: target/failsafe-reports/TEST-*.xml
-        reporter: java-junit
+      - name: Set Vars
+        id: vars
+        run: echo Settings Vars
+
+      - name: Code Checkout
+        run: echo Checking out Code
+
+      - name: Get POM update criteria
+        id: pom_updates
+        run: echo Getting POM Update Criteria
+
+      - name: Bump Patch
+        run: echo Bumping path
+
+      - name: Bump Minor
+        run: echo Bumping Minor
+
+      - name: Bump Major
+        run: echo Bumping Major
+
+      - name: Commit POM Changes
+        run: echo Commiting POM Changes
+
+      - name: Push POM changes
+        run: echo ushinf POM changes
+
+      - name: Git Pull
+        run: echo Running Git Pull
+
+      - name: Get Updated (or current) POM Version and SHA
+        run: echo Getting Update POM Version
+
+      - name: Create Snapshot Tag
+        run: echo Creating Snapshot Tag
+
+      - name: Push Tag changes
+        run: echo Pushing Tag Changes
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn -B verify --file pom.xml
+
+      - name: Unit Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: 1) JUnit Tests
+          path: target/surefire-reports/TEST-*.xml
+          reporter: java-junit
+
+      - name: Integration Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: 2) Integration Tests
+          path: target/failsafe-reports/TEST-*.xml
+          reporter: java-junit
+
