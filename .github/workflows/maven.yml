@@ -27,7 +27,7 @@ jobs:
       if: success() || failure()
       with:
         name: 1) JUnit Tests
-        path: target/surefire-reports/*.xml
+        path: target/surefire-reports/TEST-*.xml
         reporter: java-junit
 
     - name: Integration Test Report
@@ -35,5 +35,5 @@ jobs:
       if: success() || failure()
       with:
         name: 2) Integration Tests
-        path: target/failsafe-reports/*.xml
+        path: target/failsafe-reports/TEST-*.xml
         reporter: java-junit
