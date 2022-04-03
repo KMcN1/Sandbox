@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -22,6 +20,10 @@ jobs:
     - name: Build with Maven
       run: mvn -B verify --file pom.xml
 
+  reports:
+    runs-on: ubuntu-latest
+    steps:    
+    
     - name: Unit Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()
