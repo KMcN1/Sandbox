@@ -1,16 +1,14 @@
-package com.github.sparsick.testcontainerspringboot.hero.universum;
+package com.github.sparsick.testcontainerspringboot.hero.containers;
 
+import com.github.sparsick.testcontainerspringboot.hero.universum.ComicUniversum;
+import com.github.sparsick.testcontainerspringboot.hero.universum.Hero;
+import com.github.sparsick.testcontainerspringboot.hero.universum.HeroClassicJpaRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -19,9 +17,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled
-@SpringBootTest
-class HeroClassicJpaRepositoryReuseDatabaseIT extends DatabaseBaseTest {
+class HeroContainersJpaRepositoryIT extends TestContainersBaseTest {
 
     @Autowired
     private HeroClassicJpaRepository repositoryUnderTest;
@@ -46,4 +42,5 @@ class HeroClassicJpaRepositoryReuseDatabaseIT extends DatabaseBaseTest {
 
         assertThat(heros).contains(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
     }
+
 }

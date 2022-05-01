@@ -2,6 +2,7 @@ package com.github.sparsick.testcontainerspringboot.hero.universum;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.ext.ScriptUtils;
@@ -14,6 +15,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 @Testcontainers
 class HeroClassicJDBCRepositoryIT {
     @Container
