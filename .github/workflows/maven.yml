@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: CI Build
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
