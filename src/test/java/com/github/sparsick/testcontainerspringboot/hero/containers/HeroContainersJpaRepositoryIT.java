@@ -17,7 +17,6 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
 class HeroContainersJpaRepositoryIT extends TestContainersBaseTest {
 
     @Autowired

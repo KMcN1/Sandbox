@@ -18,6 +18,7 @@ import static org.testcontainers.containers.localstack.LocalStackContainer.Servi
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext
+@Testcontainers
 public abstract class TestContainersBaseTest {
 
 //    private static Network network = Network.newNetwork();
