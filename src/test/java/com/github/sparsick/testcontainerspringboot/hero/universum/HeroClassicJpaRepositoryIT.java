@@ -30,12 +30,12 @@ class HeroClassicJpaRepositoryIT {
 
     @Test
     void findAllHero(){
-        int numberHeros = repositoryUnderTest.allHeros().size();
+        int numberHeros = repositoryUnderTest.allHeroes().size();
 
         repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
         repositoryUnderTest.addHero(new Hero("Superman", "Metropolis", ComicUniversum.DC_COMICS));
 
-        Collection<Hero> heros = repositoryUnderTest.allHeros();
+        Collection<Hero> heros = repositoryUnderTest.allHeroes();
 
         assertThat(heros).hasSize(numberHeros + 2);
     }

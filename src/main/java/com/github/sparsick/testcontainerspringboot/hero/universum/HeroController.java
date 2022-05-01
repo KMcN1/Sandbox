@@ -37,7 +37,7 @@ public class HeroController {
 
     private Collection<Hero> collectHeros(String search) {
         if(StringUtils.isBlank(search) || StringUtils.isEmpty(search)) {
-            return heroRepository.allHeros();
+            return heroRepository.allHeroes();
         } else {
             return heroRepository.findHerosBySearchCriteria(search);
         }

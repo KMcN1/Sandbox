@@ -19,7 +19,7 @@ public class HeroClassicJpaRepository {
         em.persist(hero);
     }
 
-    public Collection<Hero> allHeros() {
+    public Collection<Hero> allHeroes() {
         return em.createQuery("Select hero FROM Hero hero", Hero.class).getResultList();
     }
 

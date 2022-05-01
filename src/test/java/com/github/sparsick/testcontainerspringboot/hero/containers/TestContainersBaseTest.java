@@ -17,9 +17,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.testcontainers.containers.localstack.LocalStackContainer.Service.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Testcontainers
 @DirtiesContext
-public class TestContainersBaseTest {
+public abstract class TestContainersBaseTest {
 
 //    private static Network network = Network.newNetwork();
 //    @ClassRule
@@ -32,8 +31,8 @@ public class TestContainersBaseTest {
     protected TestRestTemplate testRestTemplate;
 
     @Container
-    public static MySQLContainer mySql =  new MySQLContainer<>("")
-            .withDatabaseName("affordiq")
+    public static MySQLContainer mySql =  new MySQLContainer<>("mysql:8.0.24")
+            .withDatabaseName("test")
             .withUsername("user")
             .withPassword("pass");
             //.withInitScript("");
