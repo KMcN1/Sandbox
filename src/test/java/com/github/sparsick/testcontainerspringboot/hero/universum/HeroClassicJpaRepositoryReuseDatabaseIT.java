@@ -1,5 +1,6 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
+import com.github.sparsick.testcontainerspringboot.hero.containers.TestContainersBaseTest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,13 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled
-@SpringBootTest
-class HeroClassicJpaRepositoryReuseDatabaseIT extends DatabaseBaseTest {
+class HeroClassicJpaRepositoryReuseDatabaseIT extends TestContainersBaseTest {
 
     @Autowired
     private HeroClassicJpaRepository repositoryUnderTest;
 
     @Test
-    void findAllHero(){
+    void findAllHeroes3(){
         int numberHeroes = repositoryUnderTest.allHeroes().size();
 
         repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
@@ -39,7 +38,7 @@ class HeroClassicJpaRepositoryReuseDatabaseIT extends DatabaseBaseTest {
     }
 
     @Test
-    void findHeroByCriteria(){
+    void findHeroByCriteria3(){
         repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
 
         Collection<Hero> heros = repositoryUnderTest.findHerosBySearchCriteria("Batman");

@@ -1,5 +1,6 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
+import com.github.sparsick.testcontainerspringboot.hero.containers.TestContainersBaseTest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
-@SpringBootTest
 @AutoConfigureMockMvc
-@Testcontainers
-class HeroRestControllerIT {
-
-    @Container
-    private static MySQLContainer database = new MySQLContainer();
+class HeroRestControllerIT extends TestContainersBaseTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,19 +35,12 @@ class HeroRestControllerIT {
     private HeroSpringDataJpaRepository heroRepository;
 
     @Test
-    void allHeros() throws Exception {
+    void allHeroes4() throws Exception {
         heroRepository.save(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
         heroRepository.save(new Hero("Superman", "Metropolis", ComicUniversum.DC_COMICS));
 
         mockMvc.perform(get("/heros"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*].name", containsInAnyOrder("Batman", "Superman")));
-    }
-
-    @DynamicPropertySource
-    static void databaseProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url",database::getJdbcUrl);
-        registry.add("spring.datasource.username", database::getUsername);
-        registry.add("spring.datasource.password", database::getPassword);
     }
 }

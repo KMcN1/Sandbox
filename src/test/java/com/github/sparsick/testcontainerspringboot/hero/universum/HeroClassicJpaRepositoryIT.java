@@ -1,5 +1,6 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
+import com.github.sparsick.testcontainerspringboot.hero.containers.TestContainersBaseTest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +19,13 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled
-@SpringBootTest
-@Testcontainers
-class HeroClassicJpaRepositoryIT {
-    @Container
-    private static MySQLContainer database = new MySQLContainer();
+class HeroClassicJpaRepositoryIT extends TestContainersBaseTest {
 
     @Autowired
     private HeroClassicJpaRepository repositoryUnderTest;
 
     @Test
-    void findAllHero(){
+    void findAllHeroes2(){
         int numberHeros = repositoryUnderTest.allHeroes().size();
 
         repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
@@ -41,18 +37,11 @@ class HeroClassicJpaRepositoryIT {
     }
 
     @Test
-    void findHeroByCriteria(){
+    void findHeroByCriteria2(){
         repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
 
         Collection<Hero> heros = repositoryUnderTest.findHerosBySearchCriteria("Batman");
 
         assertThat(heros).contains(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
-    }
-
-    @DynamicPropertySource
-    static void databaseProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url",database::getJdbcUrl);
-        registry.add("spring.datasource.username", database::getUsername);
-        registry.add("spring.datasource.password", database::getPassword);
     }
 }

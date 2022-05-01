@@ -1,5 +1,6 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
+import com.github.sparsick.testcontainerspringboot.hero.containers.TestContainersBaseTest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,15 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Testcontainers
-class HeroSpringDataJpaRepositoryIT {
-    @Container
-    private static MySQLContainer database = new MySQLContainer();
+class HeroSpringDataJpaRepositoryIT extends TestContainersBaseTest {
 
     @Autowired
     private HeroSpringDataJpaRepository repositoryUnderTest;
 
     @Test
-    void findHerosBySearchCriteria() {
+    void findHerosBySearchCriteria5() {
         repositoryUnderTest.save(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
 
         Collection<Hero> heros = repositoryUnderTest.findHerosBySearchCriteria("Batman");
@@ -39,10 +36,4 @@ class HeroSpringDataJpaRepositoryIT {
         assertThat(heros).hasSize(1).contains(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
     }
 
-    @DynamicPropertySource
-    static void databaseProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url",database::getJdbcUrl);
-        registry.add("spring.datasource.username", database::getUsername);
-        registry.add("spring.datasource.password", database::getPassword);
-    }
 }

@@ -1,7 +1,5 @@
 package com.github.sparsick.testcontainerspringboot.hero.containers;
 
-import org.junit.ClassRule;
-import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -9,12 +7,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.containers.Network;
-import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import static org.testcontainers.containers.localstack.LocalStackContainer.Service.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext
@@ -32,7 +26,7 @@ public abstract class TestContainersBaseTest {
     protected TestRestTemplate testRestTemplate;
 
     @Container
-    public static MySQLContainer mySql =  new MySQLContainer<>("mysql:8.0.24")
+    public static MySQLContainer database =  new MySQLContainer<>("mysql:8.0.16")
             .withDatabaseName("test")
             .withUsername("user")
             .withPassword("pass");
@@ -41,9 +35,9 @@ public abstract class TestContainersBaseTest {
 
     @DynamicPropertySource
     public static void properties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", mySql::getJdbcUrl);
-        registry.add("spring.datasource.username", mySql::getUsername);
-        registry.add("spring.datasource.password", mySql::getPassword);
+        registry.add("spring.datasource.url", database::getJdbcUrl);
+        registry.add("spring.datasource.username", database::getUsername);
+        registry.add("spring.datasource.password", database::getPassword);
 
     }
 
