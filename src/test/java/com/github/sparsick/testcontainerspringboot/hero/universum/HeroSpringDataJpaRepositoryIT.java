@@ -21,12 +21,12 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@DataJpaTest
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Sql(scripts = {"classpath:db/clear_data.sql"})
 class HeroSpringDataJpaRepositoryIT extends TestContainersBaseTest {
 
     @Autowired
     private HeroSpringDataJpaRepository repositoryUnderTest;
+
 
     @Test
     void findHerosBySearchCriteria5() {

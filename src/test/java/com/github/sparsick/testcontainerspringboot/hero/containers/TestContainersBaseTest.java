@@ -33,7 +33,7 @@ public abstract class TestContainersBaseTest {
 
     private static Network network = Network.newNetwork();
 
-    @Container
+    // @Container
     public static MySQLContainer database = new MySQLContainer<>("mysql:8.0.16")
             .withDatabaseName("test")
             .withUsername("user")
@@ -46,12 +46,14 @@ public abstract class TestContainersBaseTest {
     /* Don't use @Container, as it will be re-started before every test class, and it takes ages.  */
     public static LocalStackContainer localStack = new LocalStackContainer(DockerImageName.parse("localstack/localstack:0.11.3"))
             .withNetwork(network)
-            .withNetworkAliases("something", "awslocal")
+            .withNetworkAliases("localhost", "awslocal")
             .withServices(SQS, DYNAMODB);
 
     static {
         /* Using static block instead, as it will only be started once, thereby speeding up time for multiple tests. */
         localStack.start();
+
+        database.start();
     }
 
     @DynamicPropertySource

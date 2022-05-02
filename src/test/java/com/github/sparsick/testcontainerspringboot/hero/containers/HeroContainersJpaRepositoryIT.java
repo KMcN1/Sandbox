@@ -22,9 +22,6 @@ import java.util.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-// @Sql(scripts = {"classpath:db/clear_data.sql"
-//        ,"classpath:db/create_entry.sql"
-// })
 class HeroContainersJpaRepositoryIT extends TestContainersBaseTest {
 
     @Autowired
@@ -44,6 +41,27 @@ class HeroContainersJpaRepositoryIT extends TestContainersBaseTest {
     @BeforeEach
     void beforeEach() {
         dynamoDbTestUtils.createTable(Customer.class);
+    }
+
+    @Sql(scripts = {"classpath:db/clear_data.sql"})
+    @Test
+    void findAllHeroes() {
+        repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
+        repositoryUnderTest.addHero(new Hero("Superman", "Metropolis", ComicUniversum.DC_COMICS));
+
+        Collection<Hero> heros = repositoryUnderTest.allHeroes();
+
+        assertThat(heros, hasSize(2));
+    }
+
+    @Sql(scripts = {"classpath:db/clear_data.sql"})
+    @Test
+    void findHeroByCriteria() {
+        repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
+
+        Collection<Hero> heros = repositoryUnderTest.findHerosBySearchCriteria("Batman");
+
+        assertThat(heros, contains(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS)));
     }
 
     @Test
@@ -67,25 +85,5 @@ class HeroContainersJpaRepositoryIT extends TestContainersBaseTest {
         assertThat(result.getQueueUrl(), Matchers.endsWith("myqueue1"));
     }
 
-    @Test
-    void findAllHero() {
-        int numberHeroes = repositoryUnderTest.allHeroes().size();
-
-        repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
-        repositoryUnderTest.addHero(new Hero("Superman", "Metropolis", ComicUniversum.DC_COMICS));
-
-        Collection<Hero> heros = repositoryUnderTest.allHeroes();
-
-        assertThat(heros, hasSize(numberHeroes + 2));
-    }
-
-    @Test
-    void findHeroByCriteria() {
-        repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
-
-        Collection<Hero> heros = repositoryUnderTest.findHerosBySearchCriteria("Batman");
-
-        assertThat(heros, contains(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS)));
-    }
 
 }

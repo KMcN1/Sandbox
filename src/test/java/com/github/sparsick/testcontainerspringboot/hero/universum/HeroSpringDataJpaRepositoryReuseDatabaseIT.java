@@ -12,9 +12,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// @Sql(scripts = "classpath:db/clear_data.sql")
-//@DataJpaTest
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Sql(scripts = "classpath:db/clear_data.sql")
 class HeroSpringDataJpaRepositoryReuseDatabaseIT extends TestContainersBaseTest {
 
     @Autowired

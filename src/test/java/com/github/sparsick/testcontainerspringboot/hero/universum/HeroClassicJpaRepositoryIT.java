@@ -20,24 +20,23 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// @Sql(scripts = "classpath:db/clear_data.sql")
 class HeroClassicJpaRepositoryIT extends TestContainersBaseTest {
 
     @Autowired
     private HeroClassicJpaRepository repositoryUnderTest;
 
+    @Sql(scripts = {"classpath:db/clear_data.sql"})
     @Test
     void findAllHeroes2(){
-        int numberHeros = repositoryUnderTest.allHeroes().size();
-
         repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
         repositoryUnderTest.addHero(new Hero("Superman", "Metropolis", ComicUniversum.DC_COMICS));
 
         Collection<Hero> heros = repositoryUnderTest.allHeroes();
 
-        assertThat(heros).hasSize(numberHeros + 2);
+        assertThat(heros).hasSize(2);
     }
 
+    @Sql(scripts = {"classpath:db/clear_data.sql"})
     @Test
     void findHeroByCriteria2(){
         repositoryUnderTest.addHero(new Hero("Batman", "Gotham City", ComicUniversum.DC_COMICS));
