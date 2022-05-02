@@ -34,7 +34,7 @@ jobs:
 
       - name: Integration Tests
         if: success() || failure()
-        run: mvn -B verify -DskipTests
+        run: mvn failsafe:integration-test
 
       - name: Integration Test Report
         uses: dorny/test-reporter@v1
