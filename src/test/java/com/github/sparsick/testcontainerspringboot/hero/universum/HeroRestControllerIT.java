@@ -1,22 +1,11 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
-import com.github.sparsick.testcontainerspringboot.hero.containers.TestContainersBaseTest;
-import org.junit.jupiter.api.Disabled;
+import com.github.sparsick.testcontainerspringboot.hero.containers.IntegrationTestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
@@ -28,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Sql(scripts = {"classpath:db/clear_data.sql"})
 @AutoConfigureMockMvc
-class HeroRestControllerIT extends TestContainersBaseTest {
+class HeroRestControllerIT extends IntegrationTestBase {
 
     @Autowired
     private MockMvc mockMvc;

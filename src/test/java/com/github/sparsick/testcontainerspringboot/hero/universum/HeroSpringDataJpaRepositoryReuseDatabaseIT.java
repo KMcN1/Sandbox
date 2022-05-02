@@ -1,11 +1,8 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
-import com.github.sparsick.testcontainerspringboot.hero.containers.TestContainersBaseTest;
-import org.junit.jupiter.api.Disabled;
+import com.github.sparsick.testcontainerspringboot.hero.containers.IntegrationTestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Collection;
@@ -13,7 +10,7 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Sql(scripts = "classpath:db/clear_data.sql")
-class HeroSpringDataJpaRepositoryReuseDatabaseIT extends TestContainersBaseTest {
+class HeroSpringDataJpaRepositoryReuseDatabaseIT extends IntegrationTestBase {
 
     @Autowired
     private HeroSpringDataJpaRepository repositoryUnderTest;

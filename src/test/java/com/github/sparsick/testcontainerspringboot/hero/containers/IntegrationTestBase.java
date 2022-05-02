@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
@@ -23,36 +22,36 @@ import static org.testcontainers.containers.localstack.LocalStackContainer.Servi
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(DynamoDbTestConfig.class)
-@DirtiesContext
 @Testcontainers
-public abstract class TestContainersBaseTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestContainersBaseTest.class);
+public abstract class IntegrationTestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(IntegrationTestBase.class);
 
     @Autowired
     protected TestRestTemplate testRestTemplate;
 
-    private static Network network = Network.newNetwork();
+    // This starts fairly quickly, so OK to use '@Container' to startup, which ensures a clean state before each test class.
+    @Container
+    public static GenericContainer redis = new GenericContainer(DockerImageName.parse("redis:5.0.3-alpine"))
+            .withExposedPorts(6379);
 
-    // @Container
+    /* Don't use @Container, as it will be re-started before every test class, and it takes ages.
+       So, need to use @MySql annotations in child classes to get a clean state before each test class  */
     public static MySQLContainer database = new MySQLContainer<>("mysql:8.0.16")
             .withDatabaseName("test")
             .withUsername("user")
             .withPassword("pass");
 
-    @Container
-    public static GenericContainer redis = new GenericContainer(DockerImageName.parse("redis:5.0.3-alpine"))
-            .withExposedPorts(6379);
 
-    /* Don't use @Container, as it will be re-started before every test class, and it takes ages.  */
+    /* Don't use @Container, as it will be re-started before every test class, and it takes ages.
+       So, need to find a way to clean SQS and DynamoDB before each test class to ensure a clean state. */
     public static LocalStackContainer localStack = new LocalStackContainer(DockerImageName.parse("localstack/localstack:0.11.3"))
-            .withNetwork(network)
+            .withNetwork(Network.newNetwork())
             .withNetworkAliases("localhost", "awslocal")
             .withServices(SQS, DYNAMODB);
 
     static {
-        /* Using static block instead, as it will only be started once, thereby speeding up time for multiple tests. */
+        /* Using static block instead, so these are only started once, thereby speeding up time for multiple tests. */
         localStack.start();
-
         database.start();
     }
 

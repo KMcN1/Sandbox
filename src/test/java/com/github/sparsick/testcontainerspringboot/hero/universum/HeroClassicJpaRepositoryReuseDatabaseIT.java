@@ -1,27 +1,15 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
-import com.github.sparsick.testcontainerspringboot.hero.containers.TestContainersBaseTest;
-import org.junit.jupiter.api.Disabled;
+import com.github.sparsick.testcontainerspringboot.hero.containers.IntegrationTestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HeroClassicJpaRepositoryReuseDatabaseIT extends TestContainersBaseTest {
+class HeroClassicJpaRepositoryReuseDatabaseIT extends IntegrationTestBase {
 
     @Autowired
     private HeroClassicJpaRepository repositoryUnderTest;

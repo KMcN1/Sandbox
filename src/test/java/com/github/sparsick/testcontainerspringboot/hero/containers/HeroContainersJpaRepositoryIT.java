@@ -22,7 +22,7 @@ import java.util.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-class HeroContainersJpaRepositoryIT extends TestContainersBaseTest {
+class HeroContainersJpaRepositoryIT extends IntegrationTestBase {
 
     @Autowired
     private HeroClassicJpaRepository repositoryUnderTest;

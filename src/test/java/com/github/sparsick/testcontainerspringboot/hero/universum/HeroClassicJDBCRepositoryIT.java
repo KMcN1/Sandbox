@@ -1,6 +1,6 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
-import com.github.sparsick.testcontainerspringboot.hero.containers.TestContainersBaseTest;
+import com.github.sparsick.testcontainerspringboot.hero.containers.IntegrationTestBase;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Disabled;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Disabled
-class HeroClassicJDBCRepositoryIT extends TestContainersBaseTest {
+class HeroClassicJDBCRepositoryIT extends IntegrationTestBase {
 
     private HeroClassicJDBCRepository repositoryUnderTest;
 
