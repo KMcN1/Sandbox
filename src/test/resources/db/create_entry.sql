@@ -1,0 +1,1 @@
+insert into hero (city, name, universum, id) values ('Some City', 'Some Name', 'MARVEL', 100);

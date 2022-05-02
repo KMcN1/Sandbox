@@ -1,10 +1,9 @@
 package com.github.sparsick.testcontainerspringboot.hero.universum;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Table(name = "hero")
 @Entity
 public class Hero {
 
@@ -16,6 +15,7 @@ public class Hero {
 
     private String city;
 
+    @Enumerated(EnumType.STRING)
     private ComicUniversum universum;
 
     public Hero(String name, String city, ComicUniversum universum) {

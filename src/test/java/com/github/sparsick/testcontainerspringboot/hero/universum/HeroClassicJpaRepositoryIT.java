@@ -11,6 +11,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -19,6 +20,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// @Sql(scripts = "classpath:db/clear_data.sql")
 class HeroClassicJpaRepositoryIT extends TestContainersBaseTest {
 
     @Autowired

@@ -12,6 +12,7 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -20,6 +21,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// @Sql(scripts = "classpath:db/clear_data.sql")
 class HeroClassicJpaRepositoryReuseDatabaseIT extends TestContainersBaseTest {
 
     @Autowired
