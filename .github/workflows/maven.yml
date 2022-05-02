@@ -22,7 +22,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B verify --file pom.xml
+        run: mvn -B test --file pom.xml
 
       - name: Unit Test Report
         uses: dorny/test-reporter@v1
@@ -31,6 +31,10 @@ jobs:
           name: 1) JUnit Tests
           path: target/surefire-reports/TEST-*.xml
           reporter: java-junit
+
+      - name: Integration Tests
+        if: success() || failure()
+        run: mvn -B verify -DskipTests
 
       - name: Integration Test Report
         uses: dorny/test-reporter@v1
