@@ -47,11 +47,3 @@ jobs:
       - name: Integration Test HTML Report
         if: success() || failure()
         run: mvn failsafe:integration-test
-
-      - name: Integration Test HTML Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()
-        with:
-          name: 2) Integration Tests
-          path: target/site/failsafe-report.html
-          reporter: java-junit
