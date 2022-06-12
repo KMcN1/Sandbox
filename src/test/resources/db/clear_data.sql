@@ -1,2 +1,2 @@
-delete from hero;
+delete from user_feedback;
 

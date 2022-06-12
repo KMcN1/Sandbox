@@ -5,11 +5,19 @@ management:
                 include: info,health
 spring:
     datasource:
-        password: pwd
-        url: jdbc:mysql://localhost:3306/test
-        username: user
+        username: bart
+        password: helloworld2
+        jdbc-url: jdbc:mysql://kubernetes.docker.internal:3306/blackarrowlocal?useLegacyDatetimeCode=false
+        url: ${spring.datasource.jdbc-url}
+    catengine-datasource:
+        username: root
+        password: helloworld
+        jdbc-url: jdbc:mysql://kubernetes.docker.internal:3305/coreapi
+        url: ${spring.catengine-datasource.jdbc-url}
+    flyway:
+        enabled: false
     jpa:
-        generate-ddl: true
+        generate-ddl: false
         database-platform: org.hibernate.dialect.MySQL8Dialect
         hibernate:
             ddl-auto: none
