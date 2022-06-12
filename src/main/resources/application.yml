@@ -3,6 +3,16 @@ management:
         web:
             exposure:
                 include: info,health
+
+aws:
+    credentials:
+        access-key: 'dummy'
+        secret-key: 'dummy'
+    dynamodb:
+        endpoint: http://localhost:8000/
+    sqs:
+        endpoint: http://127.0.0.1:9324/
+
 spring:
     datasource:
         username: bart
