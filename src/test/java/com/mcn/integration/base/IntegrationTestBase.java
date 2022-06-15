@@ -1,6 +1,6 @@
-package com.mcn.containers;
+package com.mcn.integration.base;
 
-import com.mcn.containers.config.DynamoDbTestConfig;
+import com.mcn.integration.config.DynamoDbTestConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

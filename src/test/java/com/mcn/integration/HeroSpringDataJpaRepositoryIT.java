@@ -1,14 +1,13 @@
-package com.mcn.universum;
+package com.mcn.integration;
 
 import com.mcn.common.types.OsType;
-import com.mcn.containers.IntegrationTestBase;
+import com.mcn.integration.base.IntegrationTestBase;
 import com.mcn.feedback.dao.UserFeedbackDAO;
 import com.mcn.feedback.model.UserFeedback;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

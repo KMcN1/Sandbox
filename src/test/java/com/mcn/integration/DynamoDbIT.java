@@ -1,8 +1,8 @@
-package com.mcn.universum;
+package com.mcn.integration;
 
-import com.mcn.containers.IntegrationTestBase;
-import com.mcn.containers.config.DynamoDbTestUtils;
-import com.mcn.ddb.Customer;
+import com.mcn.customers.entity.Customer;
+import com.mcn.integration.base.IntegrationTestBase;
+import com.mcn.integration.config.DynamoDbTestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

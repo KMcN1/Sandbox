@@ -1,4 +1,4 @@
-package com.mcn.universum;
+package com.mcn.unit;
 
 import org.junit.jupiter.api.Test;
 

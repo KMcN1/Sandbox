@@ -1,4 +1,4 @@
-package com.mcn.containers.config;
+package com.mcn.integration.config;
 
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;

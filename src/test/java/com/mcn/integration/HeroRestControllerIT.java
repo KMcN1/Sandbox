@@ -1,7 +1,7 @@
-package com.mcn.universum;
+package com.mcn.integration;
 
 import com.mcn.common.types.OsType;
-import com.mcn.containers.IntegrationTestBase;
+import com.mcn.integration.base.IntegrationTestBase;
 import com.mcn.feedback.dao.UserFeedbackDAO;
 import com.mcn.feedback.model.UserFeedback;
 import org.hamcrest.MatcherAssert;
