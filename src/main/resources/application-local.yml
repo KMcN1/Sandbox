@@ -1,0 +1,19 @@
+aws:
+    dynamodb:
+        endpoint: http://localhost:8000/
+    sqs:
+        endpoint: http://127.0.0.1:9324/
+
+spring:
+    datasource:
+        username: bart
+        password: helloworld2
+        jdbc-url: jdbc:mysql://kubernetes.docker.internal:3306/blackarrowlocal?useLegacyDatetimeCode=false
+        url: ${spring.datasource.jdbc-url}
+    catengine-datasource:
+        username: root
+        password: helloworld
+        jdbc-url: jdbc:mysql://kubernetes.docker.internal:3305/coreapi
+        url: ${spring.catengine-datasource.jdbc-url}
+    flyway:
+        enabled: true

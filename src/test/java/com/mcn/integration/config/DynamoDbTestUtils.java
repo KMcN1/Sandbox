@@ -1,5 +1,7 @@
 package com.mcn.integration.config;
 
+import software.amazon.awssdk.core.retry.backoff.BackoffStrategy;
+import software.amazon.awssdk.core.waiters.WaiterOverrideConfiguration;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
@@ -9,6 +11,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.*;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,8 +45,9 @@ public class DynamoDbTestUtils {
         return createTable(clazz, createTableRequest);
     }
 
+
     private <T> boolean createTable(Class<T> clazz, CreateTableEnhancedRequest createTableRequest) {
-        String tableName = clazz.getSimpleName();
+        String tableName = clazz.getSimpleName();//  tableMapper.getTableName(clazz);
         if (dynamoDbClient.listTables().tableNames().contains(tableName)) {
             return true;
         }
@@ -51,7 +55,13 @@ public class DynamoDbTestUtils {
         enhancedClient.table(tableName, TableSchema.fromClass(clazz))
                 .createTable(createTableRequest);
 
-        WaiterResponse<DescribeTableResponse> result = DynamoDbWaiter.builder().client(dynamoDbClient).build()
+        WaiterResponse<DescribeTableResponse> result = DynamoDbWaiter.builder()
+                .overrideConfiguration(WaiterOverrideConfiguration.builder()
+                        .waitTimeout(Duration.ofMillis(1000))
+                        .backoffStrategy(BackoffStrategy.defaultThrottlingStrategy())
+                        .maxAttempts(20)
+                        .build())
+                .client(dynamoDbClient).build()
                 .waitUntilTableExists(describeTableRequest(tableName));
 
         return result.matched().response().isPresent();

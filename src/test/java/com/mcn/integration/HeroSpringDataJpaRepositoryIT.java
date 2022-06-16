@@ -4,6 +4,7 @@ import com.mcn.common.types.OsType;
 import com.mcn.integration.base.IntegrationTestBase;
 import com.mcn.feedback.dao.UserFeedbackDAO;
 import com.mcn.feedback.model.UserFeedback;
+import com.mcn.integration.base.IntegrationTestBaseV2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -13,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Sql(scripts = {"classpath:db/clear_data.sql"})
-class HeroSpringDataJpaRepositoryIT extends IntegrationTestBase {
+class HeroSpringDataJpaRepositoryIT extends IntegrationTestBaseV2 {
 
     @Autowired
     private UserFeedbackDAO userFeedbackDAO;
