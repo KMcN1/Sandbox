@@ -1,4 +1,6 @@
 spring:
+    flyway:
+        enabled: false
     datasource:
         driverClassName: org.h2.Driver
         password: sa

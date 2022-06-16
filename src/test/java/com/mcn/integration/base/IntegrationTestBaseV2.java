@@ -19,7 +19,7 @@ import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import({DynamoDbTestConfig.class})
-@ActiveProfiles("test")
+@ActiveProfiles("test_v2")
 @AutoConfigureMockMvc
 @Testcontainers
 public abstract class IntegrationTestBaseV2 {
