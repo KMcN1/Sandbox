@@ -4,7 +4,6 @@ import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.model.CreateQueueResult;
 import com.amazonaws.services.sqs.model.DeleteQueueResult;
 import com.mcn.integration.base.IntegrationTestBase;
-import com.mcn.integration.base.IntegrationTestBaseV2;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-class AmazonSqsIT extends IntegrationTestBaseV2 {
+class AmazonSqsIT extends IntegrationTestBase {
 
     @Autowired
     private AmazonSQSAsync sqsAsync;

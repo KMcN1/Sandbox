@@ -2,7 +2,6 @@ package com.mcn.integration;
 
 import com.mcn.customers.entity.Customer;
 import com.mcn.integration.base.IntegrationTestBase;
-import com.mcn.integration.base.IntegrationTestBaseV2;
 import com.mcn.integration.config.DynamoDbTestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-class DynamoDbIT extends IntegrationTestBaseV2 {
+class DynamoDbIT extends IntegrationTestBase {
 
 
     @Autowired

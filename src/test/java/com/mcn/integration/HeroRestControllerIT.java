@@ -1,10 +1,9 @@
 package com.mcn.integration;
 
 import com.mcn.common.types.OsType;
-import com.mcn.integration.base.IntegrationTestBase;
 import com.mcn.feedback.dao.UserFeedbackDAO;
 import com.mcn.feedback.model.UserFeedback;
-import com.mcn.integration.base.IntegrationTestBaseV2;
+import com.mcn.integration.base.IntegrationTestBase;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql(scripts = {"classpath:db/clear_data.sql"})
-class HeroRestControllerIT extends IntegrationTestBaseV2 {
+class HeroRestControllerIT extends IntegrationTestBase {
 
     @Autowired
     private MockMvc mockMvc;
