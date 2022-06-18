@@ -24,37 +24,12 @@ public class DynamoDBConfig {
     private String secretKey;
 
     @Bean
-    public DynamoDbAsyncClient amazonDynamoDBClient(AwsBasicCredentials awsBasicCredentials) {
+    public DynamoDbAsyncClient amazonDynamoDBClient() {
         return DynamoDbAsyncClient
                 .builder()
                 .endpointOverride(URI.create(amazonDynamoDBEndpoint))
                 .region(Region.EU_WEST_1)
-                .credentialsProvider(() -> awsBasicCredentials)
+                .credentialsProvider(() -> AwsBasicCredentials.create(accessKey, secretKey))
                 .build();
     }
-
-    @Bean
-    public AwsBasicCredentials awsBasicCredentials() {
-        return AwsBasicCredentials.create(accessKey, secretKey);
-    }
-
-
-    /* Used for setting up tables in test */
-    @Bean
-    public DynamoDbEnhancedClient enhancedClient(DynamoDbClient dynamoDbClient) {
-        return DynamoDbEnhancedClient.builder()
-                .dynamoDbClient(dynamoDbClient)
-                .build();
-    }
-
-    /* Used for setting up tables in test */
-    @Bean
-    public DynamoDbClient dynamoDbClient(AwsBasicCredentials awsBasicCredentials) {
-        return DynamoDbClient.builder()
-                .endpointOverride(URI.create(amazonDynamoDBEndpoint))
-                .region(Region.EU_WEST_1)
-                .credentialsProvider(() -> awsBasicCredentials)
-                .build();
-    }
-
 }

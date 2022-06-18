@@ -47,7 +47,11 @@ public class SQSRestServerConfig {
     @PreDestroy
     public void tearDown() {
         LOGGER.info("SQS Proxy Server shutting down: {}", LocalDateTime.now());
-        stopSqsClientAndServer();
+        try {
+            stopSqsClientAndServer();
+        } catch (Throwable ex) {
+            LOGGER.warn(ex.getMessage());
+        }
     }
 
     protected void startSqsClientAndServer() {

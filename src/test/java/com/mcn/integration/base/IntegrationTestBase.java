@@ -1,13 +1,9 @@
 package com.mcn.integration.base;
 
-import com.mcn.integration.config.DynamoDbTestConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -18,12 +14,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import({DynamoDbTestConfig.class})
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @Testcontainers
 public abstract class IntegrationTestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(IntegrationTestBase.class);
 
     @Autowired
     protected TestRestTemplate testRestTemplate;
@@ -34,19 +28,26 @@ public abstract class IntegrationTestBase {
             .withExposedPorts(6379);
 
     private static final DynaliteContainer DYNAMO_DB;
+    protected static final DynamoDbUtils dynamoDbUtils;
 
     static {
         DYNAMO_DB = new DynaliteContainer();
         DYNAMO_DB.start();
+
+        dynamoDbUtils = new DynamoDbUtils(DYNAMO_DB.getEndpointConfiguration().getServiceEndpoint(),
+                DYNAMO_DB.getCredentials().getCredentials().getAWSAccessKeyId(),
+                DYNAMO_DB.getCredentials().getCredentials().getAWSSecretKey());
     }
 
     @DynamicPropertySource
     public static void properties(DynamicPropertyRegistry registry) {
-        if (REDIS != null) {
-            registry.add("spring.redis.port", REDIS::getFirstMappedPort);
-            registry.add("spring.redis.host", REDIS::getHost);
-            registry.add("aws.dynamodb.endpoint", () -> DYNAMO_DB.getEndpointConfiguration().getServiceEndpoint());
-        }
+        String accessKey = DYNAMO_DB.getCredentials().getCredentials().getAWSAccessKeyId();
+        String secretKey = DYNAMO_DB.getCredentials().getCredentials().getAWSSecretKey();
+        registry.add("spring.redis.port", REDIS::getFirstMappedPort);
+        registry.add("spring.redis.host", REDIS::getHost);
+        registry.add("aws.dynamodb.endpoint", () -> DYNAMO_DB.getEndpointConfiguration().getServiceEndpoint());
+        registry.add("aws.credentials.access-key", () -> DYNAMO_DB.getCredentials().getCredentials().getAWSAccessKeyId());
+        registry.add("aws.credentials.secret-key", () -> DYNAMO_DB.getCredentials().getCredentials().getAWSSecretKey());
     }
 
 }

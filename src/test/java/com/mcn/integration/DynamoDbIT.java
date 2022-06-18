@@ -2,50 +2,49 @@ package com.mcn.integration;
 
 import com.mcn.customers.entity.Customer;
 import com.mcn.integration.base.IntegrationTestBase;
-import com.mcn.integration.config.DynamoDbTestUtils;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
-import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.Page;
+import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
+import software.amazon.awssdk.services.dynamodb.model.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DynamoDbIT extends IntegrationTestBase {
 
+    private static DynamoDbTable<Customer> customerTable;
 
     @Autowired
-    private DynamoDbEnhancedClient enhancedClient;
+    private DynamoDbAsyncClient amazonDynamoDBClient;
 
-    @Autowired
-    private DynamoDbTestUtils dynamoDbTestUtils;
-
-    private DynamoDbTable<Customer> table;
-
-    @BeforeEach
-    void beforeEach() {
-        dynamoDbTestUtils.createTable(Customer.class);
+    @BeforeAll
+    static void setUp() {
+        customerTable = dynamoDbUtils.getDynamoDbTable(Customer.class);
+        boolean tableExists = dynamoDbUtils.createTable(customerTable);
+        assertTrue(tableExists);
     }
 
     @Test
     void testDynamoDb() {
-        table = enhancedClient.table("Customer", TableSchema.fromClass(Customer.class));
-
         List<Customer> customers = new ArrayList<>();
-        Iterator<Page<Customer>> iterator = table.scan().iterator();
-        while (iterator.hasNext()) {
-            Page<Customer> res = iterator.next();
+        for (Page<Customer> res : customerTable.scan()) {
             customers.addAll(res.items());
         }
 
         assertThat(customers, equalTo(Collections.emptyList()));
     }
+
 }

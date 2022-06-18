@@ -1,7 +1,7 @@
 aws:
     credentials:
-        access-key: 'dummy'
-        secret-key: 'dummy'
+        access-key: 'bart'
+        secret-key: 'simpson'
 
 spring:
     flyway:
