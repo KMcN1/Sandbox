@@ -22,6 +22,9 @@ public class SQSConfig {
     @Value("${aws.credentials.secret-key}")
     private String secretKey;
 
+    @Value("${openbanking.batch-transactions-refresh-queue}")
+    private String batchRefreshQueue;
+
     @Bean
     public AmazonSQSAsync sqsAsync() {
         AmazonSQSAsync sqsAsync = AmazonSQSAsyncClientBuilder.standard()
@@ -31,11 +34,16 @@ public class SQSConfig {
                                 endpoint, Regions.US_EAST_2.getName()
                         )
                 ).build();
+        initQueues(sqsAsync);
         return sqsAsync;
     }
 
-    public AWSStaticCredentialsProvider getCredentialsProvider() {
+    private AWSStaticCredentialsProvider getCredentialsProvider() {
         return new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey));
+    }
+
+    private void initQueues(AmazonSQSAsync sqsAsync) {
+        sqsAsync.createQueue(batchRefreshQueue);
     }
 
 }

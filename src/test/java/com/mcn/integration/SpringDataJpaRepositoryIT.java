@@ -13,13 +13,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Sql(scripts = {"classpath:db/clear_data.sql"})
-class HeroSpringDataJpaRepositoryIT extends IntegrationTestBase {
+class SpringDataJpaRepositoryIT extends IntegrationTestBase {
 
     @Autowired
     private UserFeedbackDAO userFeedbackDAO;
 
     @Test
-    void findHeroesBySearchCriteria_SpringDataJpa() {
+    void findBySearchCriteria_SpringDataJpa() {
         userFeedbackDAO.save(UserFeedback.builder()
                         .appVersion("1.2.0")
                         .comment("It's rubbish")

@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql(scripts = {"classpath:db/clear_data.sql"})
-class HeroRestControllerIT extends IntegrationTestBase {
+class RestControllerIT extends IntegrationTestBase {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,7 +28,7 @@ class HeroRestControllerIT extends IntegrationTestBase {
 
     @Sql(scripts = {"classpath:db/clear_data.sql"})
     @Test
-    void findHeroesBySearchCriteria_MockMvc() throws Exception {
+    void findBySearchCriteria_MockMvc() throws Exception {
         saveFeedback("1.5.1", OsType.IOS);
         saveFeedback("1.2.0", OsType.ANDROID);
 
